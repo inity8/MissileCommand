@@ -21,7 +21,7 @@ def calc_heading(x1, y1, x2, y2):
 
 
 def fire_missile(x, y):
-    global missile
+    # global missile
     missile = turtle.Turtle()
     missile.color('#d0ea3e')
     missile.penup()
@@ -36,15 +36,16 @@ def fire_missile(x, y):
     # missile.shapesize(4)
     # missile.clear()
     # missile.hideturtle()
+    missiles.append(missile)
 
 
 window.onclick(fire_missile)
-
-missile = None
+missiles = []
+# missile = None
 
 while True:
     window.update()
 
-    if missile is not None:
+    for missile in missiles:
         missile.forward(4)
 
