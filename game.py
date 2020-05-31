@@ -25,6 +25,7 @@ def fire_missile(x, y):
     # global missile
     missile = turtle.Turtle()
     missile.hideturtle()
+    missile.speed(0)
     missile.color('#d0ea3e')
     missile.penup()
     missile.setpos(x=BASE_X, y=BASE_Y)
@@ -32,15 +33,17 @@ def fire_missile(x, y):
     heading = calc_heading(x1=BASE_X, y1=BASE_Y, x2=x, y2=y)
     missile.setheading(heading)
     missile.showturtle()
-    missiles.append(missile)
+    our_missiles.append(missile)
+    our_missiles_target.append([x,y])
 
 
 window.onclick(fire_missile)
-missiles = []
+our_missiles = []
+our_missiles_target = []
 
 while True:
     window.update()
 
-    for missile in missiles:
+    for missile in our_missiles:
         missile.forward(4)
 
