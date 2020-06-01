@@ -14,29 +14,16 @@ window.screensize(1200, 800)
 BASE_X, BASE_Y = 0, -300
 
 
-# def calc_heading(x1, y1, x2, y2):
-#     dx = (x2-x1)
-#     dy = (y2-y1)
-#     length = (dx ** 2 + dy ** 2) ** 0.5
-#     cos_alpha = dx / length
-#     alpha = math.acos(cos_alpha)
-#     alpha = math.degrees(alpha)
-#     if dy < 0:
-#         alpha = - alpha
-#     return alpha
-
-
 def create_missile(side, x1, y1, x2, y2):
     missile = turtle.Turtle(visible=False)
     missile.speed(0)
     if side == 'our':
         missile.color('#d0ea3e')
-    if side == 'enemy':
+    elif side == 'enemy':
         missile.color('red')
     missile.penup()
     missile.setpos(x=x1, y=y1)
     missile.pendown()
-    # heading = calc_heading(x1=BASE_X, y1=BASE_Y, x2=x, y2=y)
     heading = missile.towards(x2, y2)
     missile.setheading(heading)
     missile.showturtle()
@@ -63,7 +50,7 @@ def fire_enemy_missile():
 missiles = []
 
 window.onclick(fire_our_missile)
-for i in range(random.randint(2,8)):
+for i in range(random.randint(2, 8)):
     fire_enemy_missile()
 
 
@@ -91,6 +78,4 @@ while True:
     dead_missiles = [info for info in missiles if info['state'] == 'dead']
     for dead in dead_missiles:
         missiles.remove(dead)
-
-
 
