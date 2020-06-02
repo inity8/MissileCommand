@@ -8,11 +8,31 @@ BASE_PATH = os.path.dirname(__file__)
 # coordinates of the base
 BASE_X, BASE_Y = 0, -300
 
+# create game window
 window = Screen()
 window.setup(1200 + 3, 800 + 3)
 window.bgpic(os.path.join(BASE_PATH, 'images', 'background.png'))
 window.screensize(1200, 800)
 # window.tracer(2)
+
+class Missile(Turtle):
+    """The class that creates the rocket object.
+     By default, missiles launched from the base are created.
+     To create enemy missiles you need to transfer to
+     class constructor all parameters:
+         x, y - base coordinates (BASE_X and BASE_Y);
+         pos_x, pos_y - the initial coordinates of the rocket;
+         color = 'red' - sets red color for enemy missiles"""
+    def __init__(self, x, y, pos_x=BASE_X, pos_y=BASE_Y, color='white'):
+        super().__init__(visible=False)
+        self.penup()
+        self.speed(0)
+        self.color = self.color(color)
+        self.target = (x, y)
+        self.setpos(pos_x, pos_y)
+
+        self.state = 'launched'
+        self.radius = 0
 
 
 def create_missile(side, x1, y1, x2, y2):
