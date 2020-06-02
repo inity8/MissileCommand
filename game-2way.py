@@ -39,14 +39,8 @@ def fire_missile(x, y):
     our_missiles.append(info)
 
 
-window.onclick(fire_missile)
-our_missiles = []
-
-
-while True:
-    window.update()
-
-    for info in our_missiles:
+def move_missiles(missiles):
+    for info in missiles:
         state = info['state']
         missile = info['missile']
         if state == 'launched':
@@ -64,6 +58,18 @@ while True:
             else:
                 missile.shapesize(info['radius'])
 
-    dead_missiles = [info for info in our_missiles if info['state'] == 'dead']
+    dead_missiles = [info for info in missiles if info['state'] == 'dead']
     for dead in dead_missiles:
-        our_missiles.remove(dead)
+        missiles.remove(dead)
+
+
+window.onclick(fire_missile)
+our_missiles = []
+enemy_missiles = []
+
+
+while True:
+    window.update()
+    move_missiles(missiles=our_missiles)
+    
+
