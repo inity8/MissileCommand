@@ -16,6 +16,7 @@ class Missile(Turtle):
          x, y - base coordinates (BASE_X and BASE_Y);
          pos_x, pos_y - the initial coordinates of the rocket;
          color = 'red' - sets red color for enemy missiles"""
+
     def __init__(self, x, y, pos_x=BASE_X, pos_y=BASE_Y, color='white'):
         super().__init__(visible=False)
         self.penup()
@@ -62,11 +63,9 @@ window.screensize(1200, 800)
 # storing rocket objects
 missiles_store = []
 
-
 # enemy rocket launch
 for i in range(randint(2, number_enemy_missiles + 1)):
     fire_missile(x=BASE_X, y=BASE_Y, pos_x=randint(-600, 600), pos_y=400)
-
 
 while True:
     window.update()
@@ -90,4 +89,3 @@ while True:
     dead_missiles = [i for i in missiles_store if i.state == 'dead']
     for dead in dead_missiles:
         missiles_store.remove(dead)
-
