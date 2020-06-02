@@ -4,18 +4,9 @@ import os
 from random import randint
 
 BASE_PATH = os.path.dirname(__file__)
-
-# coordinates of the base
 BASE_X, BASE_Y = 0, -300
-
 number_enemy_missiles = 10
 
-# create game window
-window = Screen()
-window.setup(1200 + 3, 800 + 3)
-window.bgpic(os.path.join(BASE_PATH, 'images', 'background.png'))
-window.screensize(1200, 800)
-# window.tracer(2)
 
 class Missile(Turtle):
     """The class that creates the rocket object.
@@ -60,27 +51,26 @@ def fire_missile(x, y, pos_x=BASE_X, pos_y=BASE_Y):
     missile.showturtle()
     missiles_store.append(missile)
 
-# def fire_enemy_missile():
-#     half_width = divmod(window.window_width(), 2)[0]
-#     half_height = divmod(window.window_height(), 2)[0]
-#     x1 = randint(-half_width, half_width)
-#     y1 = half_height
-#     create_missile(side='enemy', x1=x1, y1=y1, x2=BASE_X, y2=BASE_Y)
 
+# create game window
+window = Screen()
+window.setup(1200 + 3, 800 + 3)
+window.bgpic(os.path.join(BASE_PATH, 'images', 'background.png'))
+window.screensize(1200, 800)
+# window.tracer(2)
 
-#storing rocket objects
+# storing rocket objects
 missiles_store = []
 
 
-# window.onclick(fire_our_missile)
-
+# enemy rocket launch
 for i in range(randint(2, number_enemy_missiles + 1)):
-    # fire_enemy_missile()
-    pass
+    fire_missile(x=BASE_X, y=BASE_Y, pos_x=randint(-600, 600), pos_y=400)
 
 
 while True:
     window.update()
+    window.onclick(fire_missile)
 
     for missile in missiles_store:
         if missile.state == 'launched':
@@ -97,7 +87,7 @@ while True:
             else:
                 missile.shapesize(missile.radius)
 
-    dead_missiles = [info for info in missiles_store if info['state'] == 'dead']
+    dead_missiles = [i for i in missiles_store if i.state == 'dead']
     for dead in dead_missiles:
         missiles_store.remove(dead)
 
