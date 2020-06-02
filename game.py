@@ -8,6 +8,9 @@ BASE_PATH = os.path.dirname(__file__)
 # coordinates of the base
 BASE_X, BASE_Y = 0, -300
 
+# game difficulty (number of enemy missiles)
+N=10
+
 # create game window
 window = Screen()
 window.setup(1200 + 3, 800 + 3)
@@ -35,25 +38,25 @@ class Missile(Turtle):
         self.radius = 0
 
 
-def create_missile(side, x1, y1, x2, y2):
-    missile = Turtle(visible=False)
-    missile.speed(0)
-    if side == 'our':
-        missile.color('#d0ea3e')
-    elif side == 'enemy':
-        missile.color('red')
-    missile.penup()
-    missile.setpos(x=x1, y=y1)
-    missile.pendown()
-    heading = missile.towards(x2, y2)
-    missile.setheading(heading)
-    missile.showturtle()
-    info = {'missile': missile,
-            'target': [x2, y2],
-            'state': 'launched',
-            'radius': 0,
-            'side': side}
-    missiles.append(info)
+# def create_missile(side, x1, y1, x2, y2):
+#     missile = Turtle(visible=False)
+#     missile.speed(0)
+#     if side == 'our':
+#         missile.color('#d0ea3e')
+#     elif side == 'enemy':
+#         missile.color('red')
+#     missile.penup()
+#     missile.setpos(x=x1, y=y1)
+#     missile.pendown()
+#     heading = missile.towards(x2, y2)
+#     missile.setheading(heading)
+#     missile.showturtle()
+#     info = {'missile': missile,
+#             'target': [x2, y2],
+#             'state': 'launched',
+#             'radius': 0,
+#             'side': side}
+#     missiles.append(info)
 
 
 def calc_heading(x2, y2, x1, y1):
@@ -67,23 +70,35 @@ def calc_heading(x2, y2, x1, y1):
     return alpha
 
 
-def fire_our_missile(x, y):
-    create_missile(side='our', x1=BASE_X, y1=BASE_Y, x2=x, y2=y)
+def fire_missile(x, y, pos_x=BASE_X, pos_y=BASE_Y):
+    if pos_x != BASE_X:
+        missile = Missile(x=BASE_X, y=BASE_Y, pos_x=pos_x, pos_y=pos_y, color='red')
+        heading = calc_heading(x1=pos_x, y1=pos_y, x2=BASE_X, y2=BASE_Y)
+    else:
+        missile = Missile(x, y)
+        heading = calc_heading(x1=pos_x, y1=pos_y, x2=x, y2=y)
+    missile.pendown()
+    missile.setheading(heading)
+    missile.showturtle()
+    missiles.append(missile)
 
+# def fire_enemy_missile():
+#     half_width = divmod(window.window_width(), 2)[0]
+#     half_height = divmod(window.window_height(), 2)[0]
+#     x1 = randint(-half_width, half_width)
+#     y1 = half_height
+#     create_missile(side='enemy', x1=x1, y1=y1, x2=BASE_X, y2=BASE_Y)
 
-def fire_enemy_missile():
-    half_width = divmod(window.window_width(), 2)[0]
-    half_height = divmod(window.window_height(), 2)[0]
-    x1 = randint(-half_width, half_width)
-    y1 = half_height
-    create_missile(side='enemy', x1=x1, y1=y1, x2=BASE_X, y2=BASE_Y)
-
-
+#storing rocket objects
 missiles = []
 
-window.onclick(fire_our_missile)
-for i in range(randint(2, 8)):
-    fire_enemy_missile()
+
+
+# window.onclick(fire_our_missile)
+
+for i in range(randint(2, N+1)):
+    # fire_enemy_missile()
+    pass
 
 
 while True:
