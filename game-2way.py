@@ -1,5 +1,6 @@
 import math
 import turtle
+from random import randint
 
 window = turtle.Screen()
 window.setup(1200 + 3, 800 + 3)
@@ -12,13 +13,13 @@ ENEMY_COUNT = 5
 
 
 def create_missile(color, x, y, x2, y2):
-    missile = turtle.Turtle(visible=True)
+    missile = turtle.Turtle(visible=False)
     missile.speed(0)
     missile.color(color)
     missile.penup()
     missile.setpos(x=x, y=y)
     missile.pendown()
-    heading = calc_heading(x2, y2)
+    heading = missile.towards(x2, y2)
     missile.setheading(heading)
     missile.showturtle()
     info = {'missile': missile,
@@ -46,7 +47,10 @@ def fire_missile(x, y):
 
 
 def fire_enemy_missile():
-    pass
+    x = randint(-600, 600)
+    y = 400
+    info = create_missile(color='red', x=x, y=y, x2=BASE_X, y2=BASE_Y)
+    enemy_missiles.append(info)
 
 
 def move_missiles(missiles):
