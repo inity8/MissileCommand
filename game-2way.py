@@ -8,6 +8,24 @@ window.screensize(1200, 800)
 # window.tracer(2)
 
 BASE_X, BASE_Y = 0, -300
+ENEMY_COUNT = 5
+
+
+def create_missile(color, x, y, x2, y2):
+    missile = turtle.Turtle(visible=True)
+    missile.speed(0)
+    missile.color(color)
+    missile.penup()
+    missile.setpos(x=x, y=y)
+    missile.pendown()
+    heading = calc_heading(x2, y2)
+    missile.setheading(heading)
+    missile.showturtle()
+    info = {'missile': missile,
+            'target': [x2, y2],
+            'state': 'launched',
+            'radius': 0}
+    return info
 
 
 def calc_heading(x1, y1, x2, y2):
@@ -23,20 +41,12 @@ def calc_heading(x1, y1, x2, y2):
 
 
 def fire_missile(x, y):
-    missile = turtle.Turtle(visible=True)
-    missile.speed(0)
-    missile.color('#d0ea3e')
-    missile.penup()
-    missile.setpos(x=BASE_X, y=BASE_Y)
-    missile.pendown()
-    heading = calc_heading(x1=BASE_X, y1=BASE_Y, x2=x, y2=y)
-    missile.setheading(heading)
-    missile.showturtle()
-    info = {'missile': missile,
-            'target': [x, y],
-            'state': 'launched',
-            'radius': 0}
+    info = create_missile(color='wite', x=BASE_X, y=BASE_Y, x2=x, y2 =y)
     our_missiles.append(info)
+
+
+def fire_enemy_missile():
+    pass
 
 
 def move_missiles(missiles):
@@ -70,6 +80,10 @@ enemy_missiles = []
 
 while True:
     window.update()
+    if len(enemy_missiles) < ENEMY_COUNT:
+        fire_enemy_missile()
     move_missiles(missiles=our_missiles)
-    
+    move_missiles(missiles=enemy_missiles)
+
+
 
