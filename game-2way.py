@@ -42,7 +42,7 @@ def calc_heading(x1, y1, x2, y2):
 
 
 def fire_missile(x, y):
-    info = create_missile(color='wite', x=BASE_X, y=BASE_Y, x2=x, y2 =y)
+    info = create_missile(color='white', x=BASE_X, y=BASE_Y, x2=x, y2 =y)
     our_missiles.append(info)
 
 
