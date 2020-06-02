@@ -78,23 +78,20 @@ for i in range(randint(2, 8)):
 while True:
     window.update()
 
-    for info in missiles:
-        state = info['state']
-        missile = info['missile']
-        if state == 'launched':
+    for missile in missiles:
+        if missile.state == 'launched':
             missile.forward(4)
-            target = info['target']
-            if missile.distance(x=target[0], y=target[1]) < 20:
-                info['state'] = 'explode'
+            if missile.distance(x=missile.target[0], y=missile.target[1]) < 20:
+                missile.state = 'explode'
                 missile.shape('circle')
-        elif state == 'explode':
-            info['radius'] += 1
-            if info['radius'] > 5:
+        elif missile.state == 'explode':
+            missile.radius += 1
+            if missile.radius > 5:
                 missile.clear()
                 missile.hideturtle()
-                info['state'] = 'dead'
+                missile.state = 'dead'
             else:
-                missile.shapesize(info['radius'])
+                missile.shapesize(missile.radius)
 
     dead_missiles = [info for info in missiles if info['state'] == 'dead']
     for dead in dead_missiles:
