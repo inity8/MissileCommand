@@ -56,6 +56,17 @@ def create_missile(side, x1, y1, x2, y2):
     missiles.append(info)
 
 
+def calc_heading(x2, y2, x1, y1):
+    dx = x2 - x1
+    dy = y2 - y1
+    length = (dx ** 2 + dy ** 2) ** 0.5
+    cos_alpha = dx / length
+    alpha = degrees(acos(cos_alpha))
+    if dy < 0:
+        alpha = -alpha
+    return alpha
+
+
 def fire_our_missile(x, y):
     create_missile(side='our', x1=BASE_X, y1=BASE_Y, x2=x, y2=y)
 
