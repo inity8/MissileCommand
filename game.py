@@ -8,8 +8,7 @@ BASE_PATH = os.path.dirname(__file__)
 # coordinates of the base
 BASE_X, BASE_Y = 0, -300
 
-# game difficulty (number of enemy missiles)
-N=10
+number_enemy_missiles = 10
 
 # create game window
 window = Screen()
@@ -38,27 +37,6 @@ class Missile(Turtle):
         self.radius = 0
 
 
-# def create_missile(side, x1, y1, x2, y2):
-#     missile = Turtle(visible=False)
-#     missile.speed(0)
-#     if side == 'our':
-#         missile.color('#d0ea3e')
-#     elif side == 'enemy':
-#         missile.color('red')
-#     missile.penup()
-#     missile.setpos(x=x1, y=y1)
-#     missile.pendown()
-#     heading = missile.towards(x2, y2)
-#     missile.setheading(heading)
-#     missile.showturtle()
-#     info = {'missile': missile,
-#             'target': [x2, y2],
-#             'state': 'launched',
-#             'radius': 0,
-#             'side': side}
-#     missiles.append(info)
-
-
 def calc_heading(x2, y2, x1, y1):
     dx = x2 - x1
     dy = y2 - y1
@@ -80,7 +58,7 @@ def fire_missile(x, y, pos_x=BASE_X, pos_y=BASE_Y):
     missile.pendown()
     missile.setheading(heading)
     missile.showturtle()
-    missiles.append(missile)
+    missiles_store.append(missile)
 
 # def fire_enemy_missile():
 #     half_width = divmod(window.window_width(), 2)[0]
@@ -89,14 +67,14 @@ def fire_missile(x, y, pos_x=BASE_X, pos_y=BASE_Y):
 #     y1 = half_height
 #     create_missile(side='enemy', x1=x1, y1=y1, x2=BASE_X, y2=BASE_Y)
 
-#storing rocket objects
-missiles = []
 
+#storing rocket objects
+missiles_store = []
 
 
 # window.onclick(fire_our_missile)
 
-for i in range(randint(2, N+1)):
+for i in range(randint(2, number_enemy_missiles + 1)):
     # fire_enemy_missile()
     pass
 
@@ -104,7 +82,7 @@ for i in range(randint(2, N+1)):
 while True:
     window.update()
 
-    for missile in missiles:
+    for missile in missiles_store:
         if missile.state == 'launched':
             missile.forward(4)
             if missile.distance(x=missile.target[0], y=missile.target[1]) < 20:
@@ -119,7 +97,7 @@ while True:
             else:
                 missile.shapesize(missile.radius)
 
-    dead_missiles = [info for info in missiles if info['state'] == 'dead']
+    dead_missiles = [info for info in missiles_store if info['state'] == 'dead']
     for dead in dead_missiles:
-        missiles.remove(dead)
+        missiles_store.remove(dead)
 
