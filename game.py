@@ -1,21 +1,22 @@
-import math
-import turtle
+from math import degrees, acos
+from turtle import Screen, Turtle
 import os
-import random
+from random import randint
 
 BASE_PATH = os.path.dirname(__file__)
 
-window = turtle.Screen()
+# coordinates of the base
+BASE_X, BASE_Y = 0, -300
+
+window = Screen()
 window.setup(1200 + 3, 800 + 3)
 window.bgpic(os.path.join(BASE_PATH, 'images', 'background.png'))
 window.screensize(1200, 800)
 # window.tracer(2)
 
-BASE_X, BASE_Y = 0, -300
-
 
 def create_missile(side, x1, y1, x2, y2):
-    missile = turtle.Turtle(visible=False)
+    missile = Turtle(visible=False)
     missile.speed(0)
     if side == 'our':
         missile.color('#d0ea3e')
@@ -42,7 +43,7 @@ def fire_our_missile(x, y):
 def fire_enemy_missile():
     half_width = divmod(window.window_width(), 2)[0]
     half_height = divmod(window.window_height(), 2)[0]
-    x1 = random.randint(-half_width, half_width)
+    x1 = randint(-half_width, half_width)
     y1 = half_height
     create_missile(side='enemy', x1=x1, y1=y1, x2=BASE_X, y2=BASE_Y)
 
@@ -50,7 +51,7 @@ def fire_enemy_missile():
 missiles = []
 
 window.onclick(fire_our_missile)
-for i in range(random.randint(2, 8)):
+for i in range(randint(2, 8)):
     fire_enemy_missile()
 
 
